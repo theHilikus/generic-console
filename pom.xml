@@ -28,4 +28,12 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<developers>
+		<developer>
+			<name>Alejandro Endo</name>
+			<id>theHilikus</id>
+			<timezone>-5</timezone>
+		</developer>
+	</developers>
 </project>
