@@ -12,6 +12,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -100,7 +101,8 @@ public class Console {
 		    output.println();
 		    toRun.execute(input, output);
 		} catch (RuntimeException exc) {
-		    error.println("[ERROR] Error running command <" + toRun + ">. Exception was\n" + exc);
+		    error.println("[ERROR] Error running command <" + toRun + ">. Exception was");
+		    exc.printStackTrace(error);
 		}
 	    } else {
 		error.println("[ERROR] Selection <" + selectionString + "> is not a valid option, try again");
@@ -110,6 +112,8 @@ public class Console {
 	    return false;
 	}
 
+	output.println("\n##############################################\n\n");
+	
 	return true;
     }
 
@@ -128,6 +132,7 @@ public class Console {
 	for (Class<? extends Command> commandClass : commandsClasses) {
 	    try {
 		commands.add(commandClass.newInstance());
+		Collections.sort(commands, (comm1, comm2) -> comm1.getDescription().compareTo(comm2.getDescription()));
 	    } catch (InstantiationException | IllegalAccessException exc) {
 		error.println("[ERROR] (populateCommands) error instantiating command " + commandClass + ":\n" + exc);
 	    }
